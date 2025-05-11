@@ -1,0 +1,24 @@
+package br.com.unitins.censohgp.repositories.impl;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import br.com.unitins.censohgp.models.IncidentModel;
+
+public interface IncidentRepository extends JpaRepository<IncidentModel, Long> {
+
+    IncidentModel findById(long id); // Obs: JpaRepository já possui findById (retorna Optional)
+
+    IncidentModel findByName(String name);
+
+    @Query("SELECT i FROM Incident i ORDER BY i.name ASC")
+    List<IncidentModel> findAllOrderedByName();
+
+    @Query("SELECT i FROM Incident i WHERE i.active = true ORDER BY i.name ASC")
+    List<IncidentModel> findAllActive();
+
+    @Query("SELECT i FROM Incident i WHERE i.active = false ORDER BY i.name ASC")
+    List<IncidentModel> findAllInactive();
+}

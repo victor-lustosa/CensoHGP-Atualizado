@@ -1,5 +1,7 @@
 package br.com.unitins.censohgp.resources;
 
+import br.com.unitins.censohgp.models.ProcedureModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,41 +21,37 @@ import br.com.unitins.censohgp.models.dtos.UserDTO;
 import br.com.unitins.censohgp.models.dtos.UserNewPasswordDTO;
 import br.com.unitins.censohgp.utils.UserUtil;
 import br.com.unitins.censohgp.exceptions.BusinessException;
-import br.com.unitins.censohgp.models.User;
+import br.com.unitins.censohgp.models.UserModel;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/apicensohgp")
 public class UserResource {
 
-    @Autowired
-    private BCryptPasswordEncoder pe;
+    private final BCryptPasswordEncoder pe;
+    private final  UserRepository userRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    private EmailService emailService;
-
-    @GetMapping("/usuarios/health")
-    public String health() {
-        return "OK";
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("ok");
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuarios")
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public ResponseEntity<List<UserModel>>  findAll() {
+        return ResponseEntity.ok(userRepository.findAll());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario/matricula/{matricula}")
-    public User findByRegistration(@PathVariable(value = "matricula") String registration) {
-        return userRepository.findByRegistration(registration);
+    public UserModel findByRegistration(@PathVariable(value = "matricula") String registration) {
+        return userRepository.findByRegistration(registration)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario/{idUsuario}")
-    public User findById(@PathVariable(value = "idUsuario") long id) {
+    public UserModel findById(@PathVariable(value = "idUsuario") long id) {
         return userRepository.findById(id);
     }
 
@@ -65,13 +63,14 @@ public class UserResource {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/usuario")
-    public ResponseEntity<User> save(@RequestBody UserDTO userDto) {
-        User existingUser = userRepository.findByRegistration(userDto.registration());
+    public ResponseEntity<UserModel> save(@RequestBody UserDTO userDto) {
+        UserModel existingUser = userRepository.findByRegistration(userDto.registration())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         if (existingUser != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta matrícula já existe no sistema!");
         }
         try {
-            User user = new User();
+            UserModel user = new UserModel();
             user.setRegistration(userDto.registration());
             user.setName(userDto.name());
             user.setEmail(userDto.email());
@@ -92,8 +91,9 @@ public class UserResource {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/usuario")
-    public ResponseEntity<User> updateUser(@Valid @RequestBody UserDTO userDto) {
-        User user = userRepository.findByRegistration(userDto.registration());
+    public ResponseEntity<UserModel> updateUser(@Valid @RequestBody UserDTO userDto) {
+        UserModel user = userRepository.findByRegistration(userDto.registration())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         if (user != null && user.getId() != userDto.id()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta matrícula já existe no sistema!");
         } else if (user != null) {
@@ -128,8 +128,8 @@ public class UserResource {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario")
-    public List<User> getByFilters(@RequestParam(value = "perfil", required = false, defaultValue = "") String role,
-                                   @RequestParam(value = "status", required = false, defaultValue = "") String status) {
+    public List<UserModel> getByFilters(@RequestParam(value = "perfil", required = false, defaultValue = "") String role,
+                                        @RequestParam(value = "status", required = false, defaultValue = "") String status) {
         if (!role.isEmpty() && status.isEmpty()) {
             int roleId = Profile.findIdByName(role);
             return userRepository.findByProfile(roleId);
@@ -147,9 +147,9 @@ public class UserResource {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/usuario/mudar-status")
-    public ResponseEntity<User> updateStatusUser(@Valid @RequestBody UserDTO userDto,
-                                                 @RequestParam(value = "matricula", required = false, defaultValue = "") String registration) {
-        User user = userRepository.findById(userDto.id());
+    public ResponseEntity<UserModel> updateStatusUser(@Valid @RequestBody UserDTO userDto,
+                                                      @RequestParam(value = "matricula", required = false, defaultValue = "") String registration) {
+        UserModel user = userRepository.findById(userDto.id());
         if (registration.equals(user.getRegistration())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não pode se desativar!");
         } else {
@@ -163,8 +163,8 @@ public class UserResource {
     }
 
     @PutMapping("/usuario/solicita-nova-senha")
-    public ResponseEntity<User> requestNewPassword(@RequestBody UserNewPasswordDTO userNewPasswordDTO) {
-        User existingUser = userRepository.findByRegistrationAndEmail(userNewPasswordDTO.registration(), userNewPasswordDTO.email());
+    public ResponseEntity<UserModel> requestNewPassword(@RequestBody UserNewPasswordDTO userNewPasswordDTO) {
+        UserModel existingUser = userRepository.findByRegistrationAndEmail(userNewPasswordDTO.registration(), userNewPasswordDTO.email());
         if (existingUser != null) {
             try {
                 String newPassword = UserUtil.newPassword();

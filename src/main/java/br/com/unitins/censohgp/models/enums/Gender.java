@@ -1,5 +1,8 @@
 package br.com.unitins.censohgp.models.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Gender {
 
     FEMALE(1, "FEMALE"),
@@ -11,14 +14,6 @@ public enum Gender {
     Gender(int code, String description) {
         this.code = code;
         this.description = description;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static Gender toEnum(Integer code) {

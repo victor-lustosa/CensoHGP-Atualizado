@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User implements Serializable {
-    public User(@NotBlank @NotNull String registration, @NotBlank String name, @NotBlank String email,
-                   @NotBlank String password) {
+public class UserModel implements Serializable {
+    public UserModel(@NotBlank @NotNull String registration, @NotBlank String name, @NotBlank String email,
+                     @NotBlank String password) {
         super();
         this.registration = registration;
         this.name = name;
