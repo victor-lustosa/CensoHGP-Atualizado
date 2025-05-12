@@ -12,7 +12,7 @@ public interface DepartmentRepository extends JpaRepository<DepartmentModel, Lon
 
     Optional<DepartmentModel> findById(long id);
 
-    @Query("select d from Department d where upper(d.name) = upper(:name)")
+    @Query("select d from DepartmentModel d where upper(d.name) = upper(:name)")
     DepartmentModel findByNameUpperCase(@Param("name") String name);
 
     // Filter Methods
@@ -25,7 +25,7 @@ public interface DepartmentRepository extends JpaRepository<DepartmentModel, Lon
     @Query(value = "select * from tb_department p where p.internal = :type and p.active = :status order by p.name asc", nativeQuery = true)
     List<DepartmentModel> findAllFilters(boolean type, boolean status);
 
-    @Query("select d from Department d order by d.name asc")
+    @Query("select d from DepartmentModel d order by d.name asc")
     List<DepartmentModel> findAllByName();
 
     @Query(value = "SELECT * FROM tb_department p WHERE p.active = 'true'", nativeQuery = true)

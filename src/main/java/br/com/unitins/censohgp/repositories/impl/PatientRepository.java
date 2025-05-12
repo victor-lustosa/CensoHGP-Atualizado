@@ -10,10 +10,10 @@ import br.com.unitins.censohgp.models.PatientModel;
 
 public interface PatientRepository extends JpaRepository<PatientModel, Long> {
 
-    Optional<PatientModel> findById(long id); // Já presente como Optional via JpaRepository
+    Optional<PatientModel> findById(long id);
 
-    PatientModel findByMedicalRecord(String medicalRecord); // "prontuario" → "medicalRecord"
+    PatientModel findByMedicalRecord(String medicalRecord);
 
     @Query(value = "SELECT * FROM tb_paciente p WHERE p.id_departamento = ?1", nativeQuery = true)
-    List<PatientModel> findByDepartment(long departmentId); // "Departamento" → "Department"
+    List<PatientModel> findByDepartment(long departmentId);
 }

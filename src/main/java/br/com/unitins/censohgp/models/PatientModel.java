@@ -62,11 +62,11 @@ public class PatientModel implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "prevention_id", referencedColumnName = "preventionId")})
     private List<PreventionModel> prevention;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "departmentId")
     private DepartmentModel department;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private UserModel user;
 

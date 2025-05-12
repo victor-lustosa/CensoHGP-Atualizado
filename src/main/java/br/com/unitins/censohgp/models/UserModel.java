@@ -37,7 +37,7 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long id;
+    private long userId;
 
     @NotNull
     @Column(name = "registration", nullable = false, unique = true)

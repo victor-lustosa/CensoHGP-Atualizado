@@ -13,12 +13,12 @@ public interface IncidentRepository extends JpaRepository<IncidentModel, Long> {
 
     IncidentModel findByName(String name);
 
-    @Query("SELECT i FROM Incident i ORDER BY i.name ASC")
+    @Query("SELECT i FROM IncidentModel i ORDER BY i.name ASC")
     List<IncidentModel> findAllOrderedByName();
 
-    @Query("SELECT i FROM Incident i WHERE i.active = true ORDER BY i.name ASC")
+    @Query("SELECT i FROM IncidentModel i WHERE i.isActive = true ORDER BY i.name ASC")
     List<IncidentModel> findAllActive();
 
-    @Query("SELECT i FROM Incident i WHERE i.active = false ORDER BY i.name ASC")
+    @Query("SELECT i FROM IncidentModel i WHERE i.isActive = false ORDER BY i.name ASC")
     List<IncidentModel> findAllInactive();
 }

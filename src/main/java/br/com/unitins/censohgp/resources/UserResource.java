@@ -1,6 +1,5 @@
 package br.com.unitins.censohgp.resources;
 
-import br.com.unitins.censohgp.models.ProcedureModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import br.com.unitins.censohgp.models.enums.Profile;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,23 +40,20 @@ public class UserResource {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario/matricula/{matricula}")
-    public UserModel findByRegistration(@PathVariable(value = "matricula") String registration) {
-        return userRepository.findByRegistration(registration)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+    public ResponseEntity<UserModel> findByRegistration(@PathVariable(value = "matricula") String registration) {
+        return ResponseEntity.ok(userRepository.findByRegistration(registration)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado")));
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario/{idUsuario}")
-    public UserModel findById(@PathVariable(value = "idUsuario") long id) {
-        return userRepository.findById(id);
+    public ResponseEntity<UserModel> findById(@PathVariable(value = "idUsuario") long id) {
+        return ResponseEntity.ok(userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado")));
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario/perfis")
-    public List<String> getProfiles() {
-        return Profile.getAllProfileNames();
+    public ResponseEntity<List<String>> getProfiles() {
+        return ResponseEntity.ok(Profile.getAllProfileNames());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -94,11 +89,11 @@ public class UserResource {
     public ResponseEntity<UserModel> updateUser(@Valid @RequestBody UserDTO userDto) {
         UserModel user = userRepository.findByRegistration(userDto.registration())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-        if (user != null && user.getId() != userDto.id()) {
+        if (user != null && user.getUserId() != userDto.id()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta matrícula já existe no sistema!");
         } else if (user != null) {
             try {
-                user.setId(userDto.id());
+                user.setUserId(userDto.id());
                 user.setRegistration(userDto.registration());
                 user.setName(userDto.name());
                 user.setEmail(userDto.email());
@@ -126,30 +121,29 @@ public class UserResource {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/usuario")
-    public List<UserModel> getByFilters(@RequestParam(value = "perfil", required = false, defaultValue = "") String role,
+    public ResponseEntity<List<UserModel>> getByFilters(@RequestParam(value = "perfil", required = false, defaultValue = "") String role,
                                         @RequestParam(value = "status", required = false, defaultValue = "") String status) {
+        List<UserModel> result = new ArrayList<>();
         if (!role.isEmpty() && status.isEmpty()) {
             int roleId = Profile.findIdByName(role);
-            return userRepository.findByProfile(roleId);
+            result = userRepository.findByProfile(roleId);
         } else if (role.isEmpty() && !status.isEmpty()) {
             boolean statusBoolean = Boolean.parseBoolean(status);
-            return userRepository.findByActiveStatus(statusBoolean);
+            result = userRepository.findByActiveStatus(statusBoolean);
         } else if (!role.isEmpty()) {
             int roleId = Profile.findIdByName(role);
             boolean statusBoolean = Boolean.parseBoolean(status);
-            return userRepository.findAllFilters(roleId, statusBoolean);
-        } else {
-            return new ArrayList<>();
+            result = userRepository.findAllFilters(roleId, statusBoolean);
         }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/usuario/mudar-status")
     public ResponseEntity<UserModel> updateStatusUser(@Valid @RequestBody UserDTO userDto,
                                                       @RequestParam(value = "matricula", required = false, defaultValue = "") String registration) {
-        UserModel user = userRepository.findById(userDto.id());
+        UserModel user = userRepository.findById(userDto.id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         if (registration.equals(user.getRegistration())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não pode se desativar!");
         } else {

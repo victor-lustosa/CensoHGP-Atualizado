@@ -14,12 +14,12 @@ public interface RiskFactorRepository extends JpaRepository<RiskFactorModel, Lon
 
     RiskFactorModel findByName(String name);
 
-    @Query("SELECT r FROM RiskFactor r ORDER BY r.name ASC")
+    @Query("SELECT r FROM RiskFactorModel r ORDER BY r.name ASC")
     List<RiskFactorModel> findAllOrderedByName();
 
-    @Query("SELECT r FROM RiskFactor r WHERE r.active = true ORDER BY r.name ASC")
+    @Query("SELECT r FROM RiskFactorModel r WHERE r.isActive = true ORDER BY r.name ASC")
     List<RiskFactorModel> findAllActive();
 
-    @Query("SELECT r FROM RiskFactor r WHERE r.active = false ORDER BY r.name ASC")
+    @Query("SELECT r FROM RiskFactorModel r WHERE r.isActive = false ORDER BY r.name ASC")
     List<RiskFactorModel> findAllInactive();
 }
