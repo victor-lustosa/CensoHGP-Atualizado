@@ -1,10 +1,10 @@
 # 🏥 Censo HGP - Sistema de Gestão de Pacientes
 
-Atualização de um sistema Java 8 para java 17, desenvolvido com **Spring Boot** para gerenciar informações do censo hospitalar, incluindo pacientes, departamentos, procedimentos e controle de acesso de usuários.
+Atualização de um sistema Java 8 para java 21, desenvolvido com **Spring Boot** para gerenciar informações do censo hospitalar, incluindo pacientes, departamentos, procedimentos e controle de acesso de usuários.
 
 ## 📦 Tecnologias Utilizadas
 
-- Java 17
+- Java 21
 - Spring Boot 3.4.x
 - Spring Security (JWT)
 - Spring Data JPA
