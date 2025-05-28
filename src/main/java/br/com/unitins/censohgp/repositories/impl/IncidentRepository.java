@@ -9,8 +9,6 @@ import br.com.unitins.censohgp.models.IncidentModel;
 
 public interface IncidentRepository extends JpaRepository<IncidentModel, Long> {
 
-    IncidentModel findById(long id); // Obs: JpaRepository já possui findById (retorna Optional)
-
     IncidentModel findByName(String name);
 
     @Query("SELECT i FROM IncidentModel i ORDER BY i.name ASC")

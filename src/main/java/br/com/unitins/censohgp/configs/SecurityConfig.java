@@ -1,4 +1,4 @@
-package br.com.unitins.censohgp.configs;
+ package br.com.unitins.censohgp.configs;
 
 import br.com.unitins.censohgp.security.JWTAuthenticationFilter;
 import br.com.unitins.censohgp.security.JWTAuthorizationFilter;
@@ -44,7 +44,8 @@ public class SecurityConfig {
             "/apicensohgp/paciente/**",
             "/apicensohgp/pacientes/**",
             "/apicensohgp/precaucaos",
-            "/apicensohgp/precaucao/**"
+            "/apicensohgp/precaucao/**",
+            "/apicensohgp/procedimentos/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {

@@ -35,13 +35,14 @@ public class PreventionModel implements Serializable {
     private String description;
 
     @NotNull
-    private boolean active;
+    @Column(name = "is_active")
+    private boolean isActive;
 
-    public PreventionModel(@NotNull @NotBlank String name, String description, @NotNull boolean active) {
+    public PreventionModel(@NotNull @NotBlank String name, String description, @NotNull boolean isActive) {
         super();
         this.name = name;
         this.description = description;
-        this.active = active;
+        this.isActive = isActive;
     }
 
 }

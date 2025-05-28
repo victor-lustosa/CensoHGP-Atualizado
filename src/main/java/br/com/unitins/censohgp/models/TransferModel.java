@@ -52,6 +52,7 @@ public class TransferModel implements Serializable {
     private String observation;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "transfer_date")
     private Date transferDate;
 
     public String getFormattedTransferDate() {

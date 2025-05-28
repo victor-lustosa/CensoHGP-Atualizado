@@ -10,8 +10,6 @@ import br.com.unitins.censohgp.models.RiskFactorModel;
 
 public interface RiskFactorRepository extends JpaRepository<RiskFactorModel, Long> {
 
-    RiskFactorModel findById(long id); // Opcional, pois JpaRepository já fornece findById(Optional)
-
     RiskFactorModel findByName(String name);
 
     @Query("SELECT r FROM RiskFactorModel r ORDER BY r.name ASC")

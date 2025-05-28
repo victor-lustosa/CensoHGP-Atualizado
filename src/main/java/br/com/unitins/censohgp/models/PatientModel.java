@@ -33,13 +33,13 @@ public class PatientModel implements Serializable {
 
     @NotBlank
     @NotNull
-    @Column(name = "medicalRecord", nullable = false, unique = true)
+    @Column(name = "medical_record", nullable = false, unique = true)
     private String medicalRecord;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "motherName")
+    @Column(name = "mother_name")
     private String motherName;
 
     @Column(name = "cpf")
@@ -52,12 +52,12 @@ public class PatientModel implements Serializable {
     @CollectionTable(name = "TB_PATIENT_GENDER")
     private Set<Integer> gender = new HashSet<>();
 
-    @Column(name = "birthDate", nullable = true)
+    @Column(name = "birth_date", nullable = true)
     private Date birthDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
-    @JoinTable(name = "tb_Patient_Prevention",
+    @JoinTable(name = "TB_PATIENT_PREVENTION",
             joinColumns = {@JoinColumn(name = "patient_id", referencedColumnName = "patientId")},
             inverseJoinColumns = {@JoinColumn(name = "prevention_id", referencedColumnName = "preventionId")})
     private List<PreventionModel> prevention;
@@ -93,6 +93,20 @@ public class PatientModel implements Serializable {
         this.birthDate = birthDate;
         this.prevention = prevention;
         this.user = user;
+    }
+
+    public PatientModel(String medicalRecord, String name, String motherName, String cpf, String rg,
+                        Date birthDate, List<PreventionModel> prevention, DepartmentModel department, UserModel user, Gender addGender) {
+        this.medicalRecord = medicalRecord;
+        this.name = name;
+        this.motherName = motherName;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.department = department;
+        this.birthDate = birthDate;
+        this.prevention = prevention;
+        this.user = user;
+        this.gender.add(addGender.getCode());
     }
 
 }

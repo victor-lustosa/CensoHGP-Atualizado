@@ -29,7 +29,7 @@ public class UserModel implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.active = true;
+        this.isActive = true;
     }
     @Serial
     private static final long serialVersionUID = 1L;
@@ -62,7 +62,8 @@ public class UserModel implements Serializable {
     private String password;
 
     @NotNull
-    private boolean active;
+    @Column(name = "is_active")
+    private boolean isActive;
 
     public void addProfile(Profile profile) {
         profiles.add(profile.getCode());

@@ -2,6 +2,7 @@ package br.com.unitins.censohgp.resources;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import jakarta.validation.Valid;
 import br.com.unitins.censohgp.models.enums.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 import br.com.unitins.censohgp.repositories.impl.UserRepository;
@@ -27,7 +27,7 @@ import br.com.unitins.censohgp.models.UserModel;
 public class UserResource {
 
     private final BCryptPasswordEncoder pe;
-    private final  UserRepository userRepository;
+    private final UserRepository userRepository;
     private final EmailService emailService;
 
     @GetMapping("/health")
@@ -36,8 +36,8 @@ public class UserResource {
     }
 
     @GetMapping("/usuarios")
-    public ResponseEntity<List<UserModel>>  findAll() {
-        return ResponseEntity.ok(userRepository.findAll());
+    public ResponseEntity<List<UserModel>> findAll() {
+        return ResponseEntity.ok(userRepository.findAllByName());
     }
 
     @GetMapping("/usuario/matricula/{matricula}")
@@ -56,7 +56,7 @@ public class UserResource {
         return ResponseEntity.ok(Profile.getAllProfileNames());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/usuario")
     public ResponseEntity<UserModel> save(@RequestBody UserDTO userDto) {
         UserModel existingUser = userRepository.findByRegistration(userDto.registration())
@@ -84,7 +84,7 @@ public class UserResource {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/usuario")
     public ResponseEntity<UserModel> updateUser(@Valid @RequestBody UserDTO userDto) {
         UserModel user = userRepository.findByRegistration(userDto.registration())
@@ -123,7 +123,7 @@ public class UserResource {
 
     @GetMapping("/usuario")
     public ResponseEntity<List<UserModel>> getByFilters(@RequestParam(value = "perfil", required = false, defaultValue = "") String role,
-                                        @RequestParam(value = "status", required = false, defaultValue = "") String status) {
+                                                        @RequestParam(value = "status", required = false, defaultValue = "") String status) {
         List<UserModel> result = new ArrayList<>();
         if (!role.isEmpty() && status.isEmpty()) {
             int roleId = Profile.findIdByName(role);
@@ -139,7 +139,7 @@ public class UserResource {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/usuario/mudar-status")
     public ResponseEntity<UserModel> updateStatusUser(@Valid @RequestBody UserDTO userDto,
                                                       @RequestParam(value = "matricula", required = false, defaultValue = "") String registration) {
@@ -163,9 +163,9 @@ public class UserResource {
             try {
                 String newPassword = UserUtil.newPassword();
                 String message = "<p>Olá," + existingUser.getName() + "!</p><br>" +
-                        "<p>Alguém solicitou uma nova senha na sua conta do CensoHGP</p><br>"+
-                        "<p>Segue a nova senha: " + newPassword + " </p><br><br>"+
-                        "<p>[NÃO RESPONDA - EMAIL GERADO AUTOMATICAMENTE PELO SISTEMA]</p><br><br>"+
+                        "<p>Alguém solicitou uma nova senha na sua conta do CensoHGP</p><br>" +
+                        "<p>Segue a nova senha: " + newPassword + " </p><br><br>" +
+                        "<p>[NÃO RESPONDA - EMAIL GERADO AUTOMATICAMENTE PELO SISTEMA]</p><br><br>" +
                         "<p>CENSO HGP - Palmas, Tocantins</p><br>";
                 existingUser.setPassword(newPassword);
                 userRepository.save(existingUser);

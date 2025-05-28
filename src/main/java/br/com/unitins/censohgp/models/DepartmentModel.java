@@ -37,9 +37,11 @@ public class DepartmentModel implements Serializable {
     private String description;
 
     @NotNull
+    @Column(name = "is_internal")
     private boolean isInternal;
 
     @NotNull
+    @Column(name = "is_active")
     private boolean isActive;
 
     public DepartmentModel(@NotNull @NotBlank String name, @NotNull int bedsCount,

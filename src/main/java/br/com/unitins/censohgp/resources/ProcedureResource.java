@@ -1,6 +1,5 @@
 package br.com.unitins.censohgp.resources;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +30,7 @@ public class ProcedureResource {
 
     @GetMapping("/procedimentos")
     public ResponseEntity<List<ProcedureModel>> findAll() {
-        return ResponseEntity.ok(procedureRepository.findAll());
+        return ResponseEntity.ok(procedureRepository.findAllByName());
     }
 
     @GetMapping("/procedimentos/ativos")
@@ -52,7 +50,7 @@ public class ProcedureResource {
         return ResponseEntity.ok(procedure);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/procedimento")
     public ResponseEntity<ProcedureModel> createProcedure(@Valid @RequestBody ProcedureModel procedure) {
         Optional<ProcedureModel> existingProcedure = procedureRepository.findByName(procedure.getName());
@@ -64,7 +62,7 @@ public class ProcedureResource {
         return new ResponseEntity<>(createdProcedure, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/procedimento")
     public ResponseEntity<ProcedureModel> updateProcedure(@Valid @RequestBody ProcedureModel procedure) {
         if (procedureRepository.existsById(procedure.getProcedureId())) {
@@ -79,7 +77,7 @@ public class ProcedureResource {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/procedimento/mudar-status")
     public ResponseEntity<ProcedureModel> updateProcedureStatus(@Valid @RequestBody ProcedureModel procedure) {
         Optional<ProcedureModel> existingProcedure = procedureRepository.findById(procedure.getProcedureId());

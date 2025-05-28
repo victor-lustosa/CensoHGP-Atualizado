@@ -1,6 +1,7 @@
 package br.com.unitins.censohgp.repositories.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,5 +15,5 @@ public interface ChecklistRepository extends JpaRepository<ChecklistModel, Long>
     ChecklistModel findById(@Param("id") long id);
 
     @Query(value = "SELECT * FROM tb_checklist WHERE id_paciente = ?1", nativeQuery = true)
-    List<ChecklistModel> findByPatientId(long patientId);
+    Optional<List<ChecklistModel>> findByPatientId(long patientId);
 }

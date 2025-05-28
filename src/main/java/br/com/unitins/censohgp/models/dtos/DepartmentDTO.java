@@ -1,9 +1,10 @@
 package br.com.unitins.censohgp.models.dtos;
 
 public record DepartmentDTO(
+        long departmentId,
         String name,
-        int bedCount,
-        boolean internal,
-        boolean active,
+        int bedsCount,
+        boolean isInternal,
+        boolean isActive,
         String description
 ) {}

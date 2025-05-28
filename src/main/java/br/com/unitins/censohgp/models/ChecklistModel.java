@@ -41,6 +41,7 @@ public class ChecklistModel implements Serializable {
             joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklistId"),
             inverseJoinColumns = @JoinColumn(name = "risk_factor_id", referencedColumnName = "riskFactorId")
     )
+    @Column(name = "risk_factors")
     private List<RiskFactorModel> riskFactors;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,6 +60,7 @@ public class ChecklistModel implements Serializable {
     )
     private List<ProcedureModel> procedures;
 
+    @Column(name = "create_at")
     private LocalDateTime createdAt;
 
     private String observation;

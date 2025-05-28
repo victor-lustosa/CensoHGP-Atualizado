@@ -35,6 +35,7 @@ public class IncidentModel implements Serializable {
     private String description;
 
     @NotNull
+    @Column(name = "is_active")
     private boolean isActive;
 
     public IncidentModel(@NotNull @NotBlank String name, String description, @NotNull boolean isActive) {

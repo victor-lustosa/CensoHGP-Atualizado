@@ -1,7 +1,6 @@
 package br.com.unitins.censohgp.repositories.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import br.com.unitins.censohgp.models.PatientModel;
 
 public interface PatientRepository extends JpaRepository<PatientModel, Long> {
-
-    Optional<PatientModel> findById(long id);
 
     PatientModel findByMedicalRecord(String medicalRecord);
 

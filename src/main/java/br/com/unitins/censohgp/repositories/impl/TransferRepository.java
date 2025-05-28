@@ -10,11 +10,7 @@ import br.com.unitins.censohgp.models.TransferModel;
 
 public interface TransferRepository extends JpaRepository<TransferModel, Long> {
 
-    Optional<TransferModel> findById(long id); // Obs: já existe um findById(Long id) como Optional no JpaRepository
-
     @Query("SELECT t FROM TransferModel t WHERE t.patient.id = ?1 ORDER BY t.transferDate DESC")
     List<TransferModel> findByPatientId(long patientId);
 
-    @Query("SELECT t FROM TransferModel t")
-    List<TransferModel> findAllTransfers();
 }
