@@ -13,19 +13,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "TB_PREVENTION")
+@Table(name = "TB_PRECAUTION")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class PreventionModel implements Serializable {
+public class PrecautionModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long preventionId;
+    private long precautionId;
 
     @NotNull
     @NotBlank
@@ -38,7 +38,7 @@ public class PreventionModel implements Serializable {
     @Column(name = "is_active")
     private boolean isActive;
 
-    public PreventionModel(@NotNull @NotBlank String name, String description, @NotNull boolean isActive) {
+    public PrecautionModel(@NotNull @NotBlank String name, String description, @NotNull boolean isActive) {
         super();
         this.name = name;
         this.description = description;

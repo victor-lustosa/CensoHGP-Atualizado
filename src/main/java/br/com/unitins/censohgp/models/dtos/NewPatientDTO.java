@@ -5,10 +5,12 @@ import java.util.List;
 
 public record NewPatientDTO(
         long patientId,
-        String chartNumber,
+        String medicalRecord,
         String name,
         String motherName,
         String cpf,
+        String rg,
+        String gender,
         Date birthDate,
         List<Long> precautions,
         long departmentId

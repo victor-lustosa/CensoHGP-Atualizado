@@ -22,8 +22,8 @@ import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.UserModel;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "/apicensohgp")
+@RequiredArgsConstructor
 public class UserResource {
 
     private final BCryptPasswordEncoder pe;

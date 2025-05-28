@@ -21,25 +21,27 @@ public class DepartmentResource {
 
     private final DepartmentRepository departmentRepository;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/departamentos")
     public ResponseEntity<List<DepartmentModel>> findAll() {
         return ResponseEntity.ok(departmentRepository.findAllByName());
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/departamento/{idDepartamento}")
     public ResponseEntity<DepartmentModel> findById(@PathVariable("departmentId") long id) {
         return ResponseEntity.ok(departmentRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado.")));
     }
 
-    @GetMapping("/departamentos/ativos")
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/departamentos/ativos")
     public ResponseEntity<List<DepartmentModel>> findAllActive() {
         return ResponseEntity.ok(departmentRepository.findAllActives());
     }
 
-    @GetMapping("/departamento")
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/departamento")
     public List<DepartmentModel> getByFilters(
             @RequestParam(value = "tipo", required = false, defaultValue = "") String type,
             @RequestParam(value = "status", required = false, defaultValue = "") String status) {
@@ -59,7 +61,7 @@ public class DepartmentResource {
         return Collections.emptyList();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/departamento")
     public ResponseEntity<Void> create(@RequestBody @Valid DepartmentDTO dto) {
         if (dto.bedsCount() < 0) {
@@ -81,7 +83,7 @@ public class DepartmentResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/departamento")
     public ResponseEntity<Void> update(@RequestBody @Valid DepartmentDTO dto) {
 
@@ -108,7 +110,7 @@ public class DepartmentResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/departamento/mudar-status")
     public ResponseEntity<Void> toggleStatus(@RequestBody @Valid DepartmentDTO dto) {
         DepartmentModel department = departmentRepository.findById(dto.departmentId())

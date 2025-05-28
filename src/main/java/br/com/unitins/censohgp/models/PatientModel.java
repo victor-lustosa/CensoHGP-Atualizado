@@ -57,10 +57,10 @@ public class PatientModel implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
-    @JoinTable(name = "TB_PATIENT_PREVENTION",
+    @JoinTable(name = "TB_PATIENT_PRECAUTION",
             joinColumns = {@JoinColumn(name = "patient_id", referencedColumnName = "patientId")},
-            inverseJoinColumns = {@JoinColumn(name = "prevention_id", referencedColumnName = "preventionId")})
-    private List<PreventionModel> prevention;
+            inverseJoinColumns = {@JoinColumn(name = "precaution_id", referencedColumnName = "precautionId")})
+    private List<PrecautionModel> precautions;
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "departmentId")
@@ -83,7 +83,7 @@ public class PatientModel implements Serializable {
     }
 
     public PatientModel(String medicalRecord, String name, String motherName, String cpf, String rg,
-                        Date birthDate, List<PreventionModel> prevention, DepartmentModel department, UserModel user) {
+                        Date birthDate, List<PrecautionModel> precautions, DepartmentModel department, UserModel user) {
         this.medicalRecord = medicalRecord;
         this.name = name;
         this.motherName = motherName;
@@ -91,12 +91,12 @@ public class PatientModel implements Serializable {
         this.rg = rg;
         this.department = department;
         this.birthDate = birthDate;
-        this.prevention = prevention;
+        this.precautions = precautions;
         this.user = user;
     }
 
     public PatientModel(String medicalRecord, String name, String motherName, String cpf, String rg,
-                        Date birthDate, List<PreventionModel> prevention, DepartmentModel department, UserModel user, Gender addGender) {
+                        Date birthDate, List<PrecautionModel> precautions, DepartmentModel department, UserModel user, Gender addGender) {
         this.medicalRecord = medicalRecord;
         this.name = name;
         this.motherName = motherName;
@@ -104,7 +104,7 @@ public class PatientModel implements Serializable {
         this.rg = rg;
         this.department = department;
         this.birthDate = birthDate;
-        this.prevention = prevention;
+        this.precautions = precautions;
         this.user = user;
         this.gender.add(addGender.getCode());
     }
