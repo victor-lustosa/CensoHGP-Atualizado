@@ -24,8 +24,9 @@ public class ChecklistModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "checklist_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long checklistId;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,8 +39,8 @@ public class ChecklistModel implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_checklist_risk_factor",
-            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklistId"),
-            inverseJoinColumns = @JoinColumn(name = "risk_factor_id", referencedColumnName = "riskFactorId")
+            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklist_id"),
+            inverseJoinColumns = @JoinColumn(name = "risk_factor_id", referencedColumnName = "risk_factor_id")
     )
     @Column(name = "risk_factors")
     private List<RiskFactorModel> riskFactors;
@@ -47,16 +48,16 @@ public class ChecklistModel implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_checklist_incident",
-            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklistId"),
-            inverseJoinColumns = @JoinColumn(name = "incident_id", referencedColumnName = "incidentId")
+            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklist_id"),
+            inverseJoinColumns = @JoinColumn(name = "incident_id", referencedColumnName = "incident_id")
     )
     private List<IncidentModel> incidents;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_checklist_procedure",
-            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklistId"),
-            inverseJoinColumns = @JoinColumn(name = "procedure_id", referencedColumnName = "ProcedureId")
+            joinColumns = @JoinColumn(name = "checklist_id", referencedColumnName = "checklist_id"),
+            inverseJoinColumns = @JoinColumn(name = "procedure_id", referencedColumnName = "Procedure_id")
     )
     private List<ProcedureModel> procedures;
 

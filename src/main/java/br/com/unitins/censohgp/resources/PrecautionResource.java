@@ -5,10 +5,8 @@ import br.com.unitins.censohgp.models.PrecautionModel;
 import br.com.unitins.censohgp.repositories.impl.PrecautionRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -65,9 +63,9 @@ public class PrecautionResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/precaucao")
     public ResponseEntity<PrecautionModel> update(@Valid @RequestBody PrecautionModel precaution) {
-        return precautionRepository.findById(precaution.getPrecautionId())
+        return precautionRepository.findById(precaution.getId())
                 .map(existing -> {
-                    precaution.setPrecautionId(existing.getPrecautionId()); // Ensure ID is consistent
+                    precaution.setId(existing.getId()); // Ensure ID is consistent
                     PrecautionModel updated = precautionRepository.save(precaution);
                     return ResponseEntity.status(CREATED).body(updated);
                 })
@@ -78,7 +76,7 @@ public class PrecautionResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/precaucao/mudar-status")
     public ResponseEntity<PrecautionModel> toggleStatus(@Valid @RequestBody PrecautionModel precaution) {
-        return precautionRepository.findById(precaution.getPrecautionId())
+        return precautionRepository.findById(precaution.getId())
                 .map(existing -> {
                     existing.setActive(!existing.isActive());
                     PrecautionModel updated = precautionRepository.save(existing);

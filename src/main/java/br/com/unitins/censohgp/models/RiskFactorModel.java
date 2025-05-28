@@ -24,8 +24,9 @@ public class RiskFactorModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "risk_factor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long riskFactorId;
+    private long id;
 
     @NotNull
     @NotBlank

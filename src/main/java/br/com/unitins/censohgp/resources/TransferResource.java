@@ -60,7 +60,7 @@ public class TransferResource {
         UserModel user = userRepository.findByRegistration(transferDTO.registration())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário informado não existe!"));
 
-        DepartmentModel origin = departmentRepository.findById(patient.getDepartment().getDepartmentId())
+        DepartmentModel origin = departmentRepository.findById(patient.getDepartment().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento de origem não foi encontrado!"));
 
         DepartmentModel destination = departmentRepository.findById(transferDTO.destinationDepartmentId())

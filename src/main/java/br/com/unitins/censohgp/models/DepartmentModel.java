@@ -22,8 +22,9 @@ public class DepartmentModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long departmentId;
+    private long id;
 
     @NotNull
     @NotBlank

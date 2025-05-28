@@ -52,7 +52,7 @@ public class PatientResource {
     public List<PatientModel> findByDepartment(@PathVariable("departamento") String name) {
         DepartmentModel department = departmentRepository.findByNameUpperCase(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid department"));
-        return patientRepository.findByDepartment(department.getDepartmentId());
+        return patientRepository.findByDepartment(department.getId());
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -65,7 +65,7 @@ public class ProcedureResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/procedimento")
     public ResponseEntity<ProcedureModel> updateProcedure(@Valid @RequestBody ProcedureModel procedure) {
-        if (procedureRepository.existsById(procedure.getProcedureId())) {
+        if (procedureRepository.existsById(procedure.getId())) {
             try {
                 ProcedureModel updatedProcedure = procedureRepository.save(procedure);
                 return ResponseEntity.ok(updatedProcedure);
@@ -81,7 +81,7 @@ public class ProcedureResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/procedimento/mudar-status")
     public ResponseEntity<ProcedureModel> updateProcedureStatus(@Valid @RequestBody ProcedureModel procedure) {
-        Optional<ProcedureModel> existingProcedure = procedureRepository.findById(procedure.getProcedureId());
+        Optional<ProcedureModel> existingProcedure = procedureRepository.findById(procedure.getId());
 
         if (existingProcedure.isPresent()) {
             ProcedureModel procedureToUpdate = existingProcedure.get();

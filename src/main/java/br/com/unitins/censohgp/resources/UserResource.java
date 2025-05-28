@@ -89,11 +89,11 @@ public class UserResource {
     public ResponseEntity<UserModel> updateUser(@Valid @RequestBody UserDTO userDto) {
         UserModel user = userRepository.findByRegistration(userDto.registration())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-        if (user != null && user.getUserId() != userDto.id()) {
+        if (user != null && user.getId() != userDto.id()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta matrícula já existe no sistema!");
         } else if (user != null) {
             try {
-                user.setUserId(userDto.id());
+                user.setId(userDto.id());
                 user.setRegistration(userDto.registration());
                 user.setName(userDto.name());
                 user.setEmail(userDto.email());

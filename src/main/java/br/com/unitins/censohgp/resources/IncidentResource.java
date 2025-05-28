@@ -6,10 +6,8 @@ import br.com.unitins.censohgp.models.IncidentModel;
 import br.com.unitins.censohgp.repositories.impl.IncidentRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -77,7 +75,7 @@ public class IncidentResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/incidente")
     public ResponseEntity<IncidentModel> update(@Valid @RequestBody IncidentModel incident) {
-        if (incidentRepository.findById(incident.getIncidentId()).isEmpty()) {
+        if (incidentRepository.findById(incident.getId()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incident not found!");
         }
         try {
@@ -97,7 +95,7 @@ public class IncidentResource {
     @PutMapping("/incidente/mudar-status")
     public ResponseEntity<IncidentModel> toggleStatus(@Valid @RequestBody IncidentModel incident) {
 
-        IncidentModel existingIncident = incidentRepository.findById(incident.getIncidentId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incident not found!"));
+        IncidentModel existingIncident = incidentRepository.findById(incident.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incident not found!"));
 
         existingIncident.setActive(!existingIncident.isActive());
         IncidentModel saved = incidentRepository.save(existingIncident);

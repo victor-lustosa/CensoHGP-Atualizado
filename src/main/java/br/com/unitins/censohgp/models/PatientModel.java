@@ -28,8 +28,9 @@ public class PatientModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "patient_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long patientId;
+    private long id;
 
     @NotBlank
     @NotNull
@@ -58,16 +59,16 @@ public class PatientModel implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @JoinTable(name = "TB_PATIENT_PRECAUTION",
-            joinColumns = {@JoinColumn(name = "patient_id", referencedColumnName = "patientId")},
-            inverseJoinColumns = {@JoinColumn(name = "precaution_id", referencedColumnName = "precautionId")})
+            joinColumns = {@JoinColumn(name = "patient_id", referencedColumnName = "patient_id")},
+            inverseJoinColumns = {@JoinColumn(name = "precaution_id", referencedColumnName = "precaution_id")})
     private List<PrecautionModel> precautions;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "departmentId")
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private DepartmentModel department;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserModel user;
 
     public void addGender(Gender addGender) {

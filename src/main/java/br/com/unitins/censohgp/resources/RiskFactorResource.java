@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -63,7 +62,7 @@ public class RiskFactorResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/fator-risco")
     public ResponseEntity<RiskFactorModel> update(@Valid @RequestBody RiskFactorModel riskFactor) {
-        if (riskFactorRepository.findById(riskFactor.getRiskFactorId()).isEmpty()) {
+        if (riskFactorRepository.findById(riskFactor.getId()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Risk factor not found");
         }
 
@@ -82,7 +81,7 @@ public class RiskFactorResource {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/fator-risco/mudar-status")
     public ResponseEntity<RiskFactorModel> toggleStatus(@Valid @RequestBody RiskFactorModel riskFactor) {
-        RiskFactorModel existingRiskFactor = riskFactorRepository.findById(riskFactor.getRiskFactorId())
+        RiskFactorModel existingRiskFactor = riskFactorRepository.findById(riskFactor.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Risk factor not found"));
 
         existingRiskFactor.setActive(!existingRiskFactor.isActive());

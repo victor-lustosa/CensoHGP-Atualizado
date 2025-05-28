@@ -6,7 +6,6 @@ import br.com.unitins.censohgp.repositories.impl.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -88,7 +87,7 @@ public class DepartmentResource {
     public ResponseEntity<Void> update(@RequestBody @Valid DepartmentDTO dto) {
 
         departmentRepository.findByNameUpperCase(dto.name())
-                .filter(dep -> dep.getDepartmentId() != dto.departmentId())
+                .filter(dep -> dep.getId() != dto.departmentId())
                 .ifPresent(dep -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This department already exists in the system!");
                 });

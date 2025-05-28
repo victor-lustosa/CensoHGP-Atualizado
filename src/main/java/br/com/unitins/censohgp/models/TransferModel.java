@@ -26,8 +26,9 @@ public class TransferModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "transfer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long transferId;
+    private long id;
 
     @NotNull(message = "O Usuário deve ser informado")
     @ManyToOne
