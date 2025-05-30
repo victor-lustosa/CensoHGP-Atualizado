@@ -8,6 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.Date;
 
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Date;
+
 @Component
 public class JWTUtil {
 
@@ -17,38 +27,46 @@ public class JWTUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String generateToken(String username, String perfil) {
-        return Jwts.builder().setSubject(perfil+'-'+username).setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512, secret.getBytes()).compact();
+    private Key signingKey;
+
+    @PostConstruct
+    public void init() {
+        signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public boolean tokenValido(String token) {
-        Claims claims = getClaims(token);
-        if (claims != null) {
-            String username = claims.getSubject();
+    public String generateToken(String username, String profile) {
+        return Jwts.builder()
+                .setSubject(profile + "-" + username)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(signingKey, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    public boolean validToken(String token) {
+        try {
+            Claims claims = getClaims(token);
+            String subject = claims.getSubject();
             Date expirationDate = claims.getExpiration();
-            Date now = new Date(System.currentTimeMillis());
-            return username != null && expirationDate != null && now.before(expirationDate);
+            return subject != null && expirationDate != null && new Date().before(expirationDate);
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
         }
-        return false;
     }
 
     public String getUsername(String token) {
-        Claims claims = getClaims(token);
-        if (claims != null) {
+        try {
+            Claims claims = getClaims(token);
             return claims.getSubject();
+        } catch (JwtException | IllegalArgumentException e) {
+            return null;
         }
-        return null;
     }
 
     private Claims getClaims(String token) {
-        try {
-            return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-        }catch (MalformedJwtException e) {
-            return (Claims) e;
-        }
-        catch (Exception e) {
-            return null;
-        }
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

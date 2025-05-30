@@ -22,9 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JWTUtil jwtUtil;
+    private final JWTUtil jwtUtil;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
@@ -37,13 +37,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse res) throws AuthenticationException {
 
         try {
-            CredentialsDTO creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), CredentialsDTO.class);
-
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.registration(), creds.password(), new ArrayList<>());
-
-            Authentication auth = authenticationManager.authenticate(authToken);
-            return auth;
+            CredentialsDTO credentials = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(credentials.registration(), credentials.password(), new ArrayList<>());
+            return authenticationManager.authenticate(authToken);
         }
         catch (IOException e) {
             throw new RuntimeException(e);

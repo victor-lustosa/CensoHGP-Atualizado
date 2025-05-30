@@ -42,16 +42,10 @@ public class DbInitService implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Populando tabela usuários
-        List<UserModel> usersList = new ArrayList<>();
-        UserModel user1 = new UserModel("230995", "Gabrielle Pereira Rocha", "iury@gmail.com", pe.encode("123456"));
-        user1.addProfile(Profile.NURSE);
-
-        UserModel user2 = new UserModel("2309952", "Brenda Martins Dias", "felipe@gmail.com", pe.encode("123456"));
-        user2.addProfile(Profile.ADMIN);
-
-        usersList.add(user1);
-        usersList.add(user2);
-
+        List<UserModel> usersList = List.of(
+        new UserModel("230995", "Gabrielle Pereira Rocha", "iury@gmail.com", pe.encode("123456"), Profile.NURSE),
+        new UserModel("2309952", "Brenda Martins Dias", "felipe@gmail.com", pe.encode("123456"), Profile.ADMIN)
+);
         userRepository.saveAll(usersList);
 
         //Populando tabela departamentos
@@ -137,40 +131,40 @@ public class DbInitService implements CommandLineRunner {
 
         List<PatientModel> patientsList = List.of(
                 new PatientModel("2458489523", "Alvaro martins", "Nicole Cavalcanti Sousa",
-                        "898.870.440-16", "25.554.376-1", date, patientPrecautionsList, dep1, user1, Gender.MALE),
+                        "898.870.440-16", "25.554.376-1", date, patientPrecautionsList, dep1, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("6169618124", "Cauã Gomes Sousa", "Carla Cunha Cavalcanti",
-                        "797.034.020-20", "50.950.308-1", date, patientPrecautionsList, dep1, user1, Gender.MALE),
+                        "797.034.020-20", "50.950.308-1", date, patientPrecautionsList, dep1, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("4775586108", "Manuela Azevedo Dias", "Sophia Melo Ferreira",
-                        "855.648.790-40", "20.056.532-1", date, patientPrecautionsList, dep2, user1, Gender.FEMALE),
+                        "855.648.790-40", "20.056.532-1", date, patientPrecautionsList, dep2, usersList.getFirst(), Gender.FEMALE),
 
                 new PatientModel("8441689371", "Beatrice Lima Pinto", "Luiza Almeida Souza",
-                        "610.027.380-24", "37.653.636-6", date, patientPrecautionsList, dep1, user1, Gender.FEMALE),
+                        "610.027.380-24", "37.653.636-6", date, patientPrecautionsList, dep1, usersList.getFirst(), Gender.FEMALE),
 
                 new PatientModel("3828125963", "Samuel Rodrigues Cavalcanti", "Amanda Goncalves Rodrigues",
-                        "548.006.780-05", "24.279.678-3", date, patientPrecautionsList, dep4, user1, Gender.MALE),
+                        "548.006.780-05", "24.279.678-3", date, patientPrecautionsList, dep4, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("6192964194", "Rebeca Rodrigues Alves", "Anna Pinto Martins",
-                        "241.626.140-16", "35.945.151-2", date, patientPrecautionsList, dep2, user1, Gender.FEMALE),
+                        "241.626.140-16", "35.945.151-2", date, patientPrecautionsList, dep2, usersList.getFirst(), Gender.FEMALE),
 
                 new PatientModel("5494319641", "Paulo Barbosa Almeida", "Fernanda Melo Rodrigues",
-                        "807.580.190-33", "35.133.759-3", date, patientPrecautionsList, dep1, user1, Gender.MALE),
+                        "807.580.190-33", "35.133.759-3", date, patientPrecautionsList, dep1, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("6898611892", "Gabriel Melo Barbosa", "Melissa Melo Almeida",
-                        "688.354.660-08", "34.256.662-3", date, patientPrecautionsList, dep4, user1, Gender.MALE),
+                        "688.354.660-08", "34.256.662-3", date, patientPrecautionsList, dep4, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("3616734441", "Eduardo Ferreira Pinto", "Maria Sousa Azevedo",
-                        "075.471.260-57", "37.907.478-3", date, patientPrecautionsList, dep4, user1, Gender.MALE),
+                        "075.471.260-57", "37.907.478-3", date, patientPrecautionsList, dep4, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("151513675", "Luiz Cunha Martins", "Isabela Carvalho Gomes",
-                        "343.720.840-30", "12.441.435-7", date, patientPrecautionsList, dep2, user1, Gender.MALE),
+                        "343.720.840-30", "12.441.435-7", date, patientPrecautionsList, dep2, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("925861461", "Kaua Barros Souza", "Melissa Barbosa Carvalho",
-                        "261.056.650-67", "21.295.585-8", date, patientPrecautionsList, dep1, user1, Gender.MALE),
+                        "261.056.650-67", "21.295.585-8", date, patientPrecautionsList, dep1, usersList.getFirst(), Gender.MALE),
 
                 new PatientModel("318887963", "Estevan Dias Azevedo", "Gabrielle Barros Dias",
-                        "261.056.650-67", "39.220.441-1", date, patientPrecautionsList, dep3, user1, Gender.MALE));
+                        "261.056.650-67", "39.220.441-1", date, patientPrecautionsList, dep3, usersList.getFirst(), Gender.MALE));
 
         patientRepository.saveAll(patientsList);
     }

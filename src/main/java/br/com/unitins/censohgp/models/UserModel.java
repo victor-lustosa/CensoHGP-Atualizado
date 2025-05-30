@@ -31,6 +31,17 @@ public class UserModel implements Serializable {
         this.password = password;
         this.isActive = true;
     }
+
+    public UserModel(@NotBlank @NotNull String registration, @NotBlank String name, @NotBlank String email,
+                     @NotBlank String password, Profile profile) {
+        super();
+        this.registration = registration;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+        this.profiles.add(profile.getCode());
+    }
     @Serial
     private static final long serialVersionUID = 1L;
 

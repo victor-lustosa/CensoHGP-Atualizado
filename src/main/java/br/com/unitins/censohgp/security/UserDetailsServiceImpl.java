@@ -1,5 +1,6 @@
  package br.com.unitins.censohgp.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,17 +13,17 @@ import br.com.unitins.censohgp.repositories.impl.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository repo;
+    private final UserRepository repo;
 
     @Override
     public UserDetails loadUserByUsername(String registration) throws UsernameNotFoundException {
-        UserModel usu = repo.findByRegistration(registration).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não existe usuário com essa matricula!"));
-        if (usu == null) {
+        UserModel user = repo.findByRegistration(registration).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não existe usuário com essa matricula!"));
+        if (user == null) {
             throw new UsernameNotFoundException(registration);
         }
-        return new UserSS((int) usu.getId(), usu.getRegistration(), usu.getPassword(), usu.getProfiles(),usu.isActive());
+        return new UserSS((int) user.getId(), user.getRegistration(), user.getPassword(), user.getProfiles(),user.isActive());
     }
 }
