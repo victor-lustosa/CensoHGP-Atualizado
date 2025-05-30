@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +27,7 @@ import java.util.Arrays;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -48,6 +48,7 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_MATCHERS_PUT = {};
 
+    @SuppressWarnings("unused")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
 
@@ -64,6 +65,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @SuppressWarnings("unused")
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
@@ -72,6 +74,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @SuppressWarnings("unused")
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }

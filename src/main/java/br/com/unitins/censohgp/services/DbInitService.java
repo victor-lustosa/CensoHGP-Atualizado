@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class DbInitService implements CommandLineRunner {
 
     private final BCryptPasswordEncoder pe;
@@ -39,7 +40,7 @@ public class DbInitService implements CommandLineRunner {
     private final PatientRepository patientRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         //Populando tabela usuários
         List<UserModel> usersList = List.of(

@@ -1,7 +1,6 @@
  package br.com.unitins.censohgp.security;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +11,7 @@ import br.com.unitins.censohgp.models.UserModel;
 import br.com.unitins.censohgp.repositories.impl.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
 
+ @SuppressWarnings("unused")
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
