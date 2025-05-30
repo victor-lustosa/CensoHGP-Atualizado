@@ -22,10 +22,15 @@ import java.util.List;
 public class ChecklistResource {
 
     private final ChecklistRepository checklistRepository;
+
     private final UserRepository userRepository;
+
     private final PatientRepository patientRepository;
+
     private final RiskFactorRepository riskFactorRepository;
+
     private final ProcedureRepository procedureRepository;
+
     private final IncidentRepository incidentRepository;
 
     @GetMapping("/checklists")

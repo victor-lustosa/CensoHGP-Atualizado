@@ -13,23 +13,28 @@ import java.util.stream.Collectors;
 import br.com.unitins.censohgp.models.enums.Profile;
 
 public class UserSS implements UserDetails {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private Integer id;
-    private String registration;
-    private String password;
-    private boolean active;
-    private Collection<? extends GrantedAuthority> authorities;
+    final private Integer id;
 
-    public UserSS(Integer id, String registration, String password, Set<Profile> perfis, boolean active) {
+    final private String registration;
+
+    final private String password;
+
+    final private boolean active;
+
+    final private Collection<? extends GrantedAuthority> authorities;
+
+    public UserSS(Integer id, String registration, String password, Set<Profile> profiles, boolean active) {
         super();
         this.id = id;
         this.registration = registration;
         this.password = password;
         this.active = active;
-        this.authorities = perfis.stream().map(profile -> new SimpleGrantedAuthority(profile.getDescription())).collect(Collectors.toList());
+        this.authorities = profiles.stream().map(profile -> new SimpleGrantedAuthority(profile.getDescription())).collect(Collectors.toList());
     }
 
     @Override

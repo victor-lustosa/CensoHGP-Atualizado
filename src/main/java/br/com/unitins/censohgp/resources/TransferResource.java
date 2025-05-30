@@ -32,8 +32,11 @@ import org.springframework.http.HttpStatus;
 public class TransferResource {
 
     private final TransferRepository transferRepository;
+
     private final UserRepository userRepository;
+
     private final PatientRepository patientRepository;
+
     private final DepartmentRepository departmentRepository;
 
     @GetMapping("/transfers")

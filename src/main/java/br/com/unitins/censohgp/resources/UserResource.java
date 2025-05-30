@@ -118,15 +118,21 @@ public class UserResource {
                                                         @RequestParam(value = "status") String status) {
         List<UserModel> result = new ArrayList<>();
         if (!profile.isEmpty() && status.isEmpty()) {
+
             int roleId = Profile.findIdByName(profile);
             result = userRepository.findByProfile(roleId);
+
         } else if (profile.isEmpty() && !status.isEmpty()) {
+
             boolean statusBoolean = Boolean.parseBoolean(status);
             result = userRepository.findByActiveStatus(statusBoolean);
+
         } else if (!profile.isEmpty()) {
+
             int roleId = Profile.findIdByName(profile);
             boolean statusBoolean = Boolean.parseBoolean(status);
             result = userRepository.findAllFilters(roleId, statusBoolean);
+
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
