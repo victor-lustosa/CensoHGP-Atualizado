@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Fatores de Risco", description = "Endpoints para fatores de risco")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class RiskFactorResource {
 
     private final RiskFactorRepository riskFactorRepository;

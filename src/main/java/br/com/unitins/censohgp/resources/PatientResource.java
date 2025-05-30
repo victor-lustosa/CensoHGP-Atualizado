@@ -27,6 +27,7 @@ import java.util.List;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Pacientes", description = "Endpoints para pacientes")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class PatientResource {
 
     private final PatientRepository patientRepository;

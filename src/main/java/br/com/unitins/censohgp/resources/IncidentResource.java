@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Incidentes", description = "Endpoints para incidentes")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class IncidentResource {
 
     private final IncidentRepository incidentRepository;

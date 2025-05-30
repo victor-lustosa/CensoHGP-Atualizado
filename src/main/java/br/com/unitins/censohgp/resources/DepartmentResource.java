@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Departamentos", description = "Endpoints para departamentos")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class DepartmentResource {
 
     private final DepartmentRepository departmentRepository;

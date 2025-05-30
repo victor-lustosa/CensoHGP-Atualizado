@@ -27,6 +27,7 @@ import org.springframework.http.HttpStatus;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Transferências", description = "Endpoints para transferências de pacientes")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 @Slf4j
 public class TransferResource {
 

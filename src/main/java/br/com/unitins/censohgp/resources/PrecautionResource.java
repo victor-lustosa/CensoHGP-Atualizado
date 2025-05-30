@@ -19,6 +19,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Precauções", description = "Endpoints para precauções")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class PrecautionResource {
 
     private final PrecautionRepository precautionRepository;

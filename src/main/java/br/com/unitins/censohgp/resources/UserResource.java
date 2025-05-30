@@ -26,6 +26,7 @@ import br.com.unitins.censohgp.models.UserModel;
 @RequestMapping(value = "/apicensohgp")
 @Tag(name = "Usuários", description = "Endpoints para usuários do sistema")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class UserResource {
 
     private final BCryptPasswordEncoder pe;

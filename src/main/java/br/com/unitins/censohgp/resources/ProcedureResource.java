@@ -20,6 +20,7 @@ import br.com.unitins.censohgp.repositories.impl.ProcedureRepository;
 @RequestMapping(value = "/apicensohgp")
 @Tag(name = "Procedimentos", description = "Endpoints para procedimentos")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class ProcedureResource {
 
     private final ProcedureRepository procedureRepository;
