@@ -1,6 +1,5 @@
 package br.com.unitins.censohgp.repositories;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -11,14 +10,14 @@ import br.com.unitins.censohgp.models.RiskFactorModel;
 
 public interface RiskFactorRepository extends JpaRepository<RiskFactorModel, Long> {
 
-    RiskFactorModel findByName(String name);
+    Optional<RiskFactorModel> findByName(String name);
 
     @Query("SELECT r FROM RiskFactorModel r ORDER BY r.name ASC")
-    Optional<List<RiskFactorModel>> findAllOrderedByName();
+    List<RiskFactorModel> findAllOrderedByName();
 
     @Query("SELECT r FROM RiskFactorModel r WHERE r.isActive = true ORDER BY r.name ASC")
-    Optional<List<RiskFactorModel>> findAllActive();
+    List<RiskFactorModel> findAllActive();
 
     @Query("SELECT r FROM RiskFactorModel r WHERE r.isActive = false ORDER BY r.name ASC")
-    Optional<List<RiskFactorModel>> findAllInactive();
+    List<RiskFactorModel> findAllInactive();
 }

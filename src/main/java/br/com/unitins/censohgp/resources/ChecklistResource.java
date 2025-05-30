@@ -40,14 +40,17 @@ public class ChecklistResource {
 
     @GetMapping("/checklists/{id}")
     public ResponseEntity<ChecklistModel> findById(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.ok(checklistRepository.findById(id)
+        return ResponseEntity.ok(checklistRepository.findChecklistById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Checklist não foi encontrado.")));
     }
 
     @GetMapping("/checklists/patient/{id}")
     public ResponseEntity<List<ChecklistModel>> findByPatient(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.ok(checklistRepository.findByPatientId(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi encontrado checklist para o paciente.")));
+         List<ChecklistModel> checklist = checklistRepository.findByPatientId(id);
+         if(checklist.isEmpty()){
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi encontrado checklist para o paciente.");
+         }
+        return ResponseEntity.ok(checklist);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

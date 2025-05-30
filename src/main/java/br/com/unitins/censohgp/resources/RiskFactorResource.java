@@ -26,22 +26,31 @@ public class RiskFactorResource {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/risk-factors")
     public ResponseEntity<List<RiskFactorModel>> findAll() {
-        return ResponseEntity.ok(riskFactorRepository.findAllOrderedByName()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found")));
+        var riskFactors = riskFactorRepository.findAllOrderedByName();
+        if(riskFactors.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found");
+        }
+        return ResponseEntity.ok(riskFactors);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/risk-factors/actives")
     public ResponseEntity<List<RiskFactorModel>> findAllActive() {
-        return ResponseEntity.ok(riskFactorRepository.findAllActive()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found")));
+        var riskFactors = riskFactorRepository.findAllActive();
+        if(riskFactors.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found");
+        }
+        return ResponseEntity.ok(riskFactors);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/risk-factors/inactives")
     public ResponseEntity<List<RiskFactorModel>> findAllInactive() {
-        return ResponseEntity.ok(riskFactorRepository.findAllInactive()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found")));
+        var riskFactors = riskFactorRepository.findAllInactive();
+        if(riskFactors.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Risk factor not found");
+        }
+        return ResponseEntity.ok(riskFactors);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -55,7 +64,7 @@ public class RiskFactorResource {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/risk-factors")
     public ResponseEntity<RiskFactorModel> create(@Valid @RequestBody RiskFactorModel riskFactor) {
-        if (riskFactorRepository.findByName(riskFactor.getName()) != null) {
+        if (riskFactorRepository.findByName(riskFactor.getName()).isPresent()) {
             throw new BusinessException("Fator de risco com esse nome já existe no sistema.");
         }
         riskFactor.setActive(true);

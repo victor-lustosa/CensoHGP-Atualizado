@@ -28,7 +28,7 @@ public class PrecautionResource {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/precautions")
     public List<PrecautionModel> getAll() {
-        return precautionRepository.findAll();
+        return precautionRepository.findAllOrderedByName();
     }
 
     @ResponseStatus(HttpStatus.OK)

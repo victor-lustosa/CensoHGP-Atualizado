@@ -8,13 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import br.com.unitins.censohgp.models.PrecautionModel;
 
-@SuppressWarnings("unused")
 public interface PrecautionRepository extends JpaRepository<PrecautionModel, Long> {
 
     Optional<PrecautionModel> findByName(String name);
 
     @Query("SELECT p FROM PrecautionModel p ORDER BY p.name ASC")
-    List<PrecautionModel> findAllOrdered();
+    List<PrecautionModel> findAllOrderedByName();
 
     @Query("SELECT p FROM PrecautionModel p WHERE p.isActive = true ORDER BY p.name ASC")
     List<PrecautionModel> findAllActive();

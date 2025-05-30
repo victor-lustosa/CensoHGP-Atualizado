@@ -10,14 +10,14 @@ import br.com.unitins.censohgp.models.IncidentModel;
 
 public interface IncidentRepository extends JpaRepository<IncidentModel, Long> {
 
-    IncidentModel findByName(String name);
+    Optional<IncidentModel> findByName(String name);
 
     @Query("SELECT i FROM IncidentModel i ORDER BY i.name ASC")
-    Optional<List<IncidentModel>> findAllOrderedByName();
+    List<IncidentModel> findAllOrderedByName();
 
     @Query("SELECT i FROM IncidentModel i WHERE i.isActive = true ORDER BY i.name ASC")
-    Optional<List<IncidentModel>> findAllActive();
+    List<IncidentModel> findAllActive();
 
     @Query("SELECT i FROM IncidentModel i WHERE i.isActive = false ORDER BY i.name ASC")
-    Optional<List<IncidentModel>> findAllInactive();
+    List<IncidentModel> findAllInactive();
 }

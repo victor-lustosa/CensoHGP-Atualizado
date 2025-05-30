@@ -27,22 +27,31 @@ public class IncidentResource {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/incidents")
     public ResponseEntity<List<IncidentModel>> findAll() {
-        return ResponseEntity.ok(incidentRepository.findAllOrderedByName()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.")));
+        var incidents = incidentRepository.findAllOrderedByName();
+        if(incidents.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.");
+        }
+        return ResponseEntity.ok(incidents);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/incidents/actives")
     public ResponseEntity<List<IncidentModel>> findAllActive() {
-        return ResponseEntity.ok(incidentRepository.findAllActive()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.")));
+        var incidents = incidentRepository.findAllActive();
+        if(incidents.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.");
+        }
+        return ResponseEntity.ok(incidents);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/incidents/inactives")
     public ResponseEntity<List<IncidentModel>> findAllInactive() {
-        return ResponseEntity.ok(incidentRepository.findAllInactive()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.")));
+        var incidents = incidentRepository.findAllInactive();
+        if(incidents.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incidente não encontrado.");
+        }
+        return ResponseEntity.ok(incidents);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -56,7 +65,7 @@ public class IncidentResource {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/incidents")
     public ResponseEntity<IncidentModel> create(@Valid @RequestBody IncidentModel incident) {
-        if (incidentRepository.findByName(incident.getName()) != null) {
+        if (incidentRepository.findByName(incident.getName()).isPresent()) {
             throw new BusinessException("Esse incidente já existe no sistema.");
         }
 

@@ -63,7 +63,7 @@ public class PatientResource {
     public ResponseEntity<Void> create(@RequestBody @Valid NewPatientDTO dto,
                                        @RequestParam(value = "userRegistration") String userRegistration) {
 
-        if (patientRepository.findByMedicalRecord(dto.medicalRecord()) != null) {
+        if (patientRepository.findByMedicalRecord(dto.medicalRecord()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente com o prontuário " + dto.medicalRecord() + " não foi encontrado.");
         }
 

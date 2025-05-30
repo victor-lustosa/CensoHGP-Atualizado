@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.unitins.censohgp.models.UserModel;
 
-@SuppressWarnings("unused")
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     @Query(" select u from UserModel u order by u.name asc")
@@ -20,9 +19,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByRegistration(@Param("registration") String registration);
 
     @Query(" select u from UserModel u where upper(u.registration) = upper(:registration) and upper(u.email) = upper(:email)")
-    UserModel findByRegistrationAndEmail(@Param("registration") String registration, @Param("email") String email);
+    Optional<UserModel> findByRegistrationAndEmail(@Param("registration") String registration, @Param("email") String email);
 
-    UserModel findByEmail(String email);
+    Optional<UserModel> findByEmail(String email);
 
     @Query(value = " select * from tb_user u, tb_user_profile x where u.id_user = x.user_id_user and x.profile = :profileId order by u.name asc", nativeQuery = true)
     List<UserModel> findByProfile(int profileId);
@@ -35,5 +34,5 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     @Modifying
     @Query(value = "UPDATE UserModel set password = :password where id_user = :id", nativeQuery = true)
-    UserModel updateUserPassword(long userId, String password);
+    Optional<UserModel> updateUserPassword(long userId, String password);
 }
