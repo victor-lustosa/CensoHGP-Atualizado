@@ -15,19 +15,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 @Component
+@SuppressWarnings("unused")
 public class JWTUtil {
 
-    @SuppressWarnings("unused")
     @Value("${jwt.secret}")
     private String secret;
 
-    @SuppressWarnings("unused")
     @Value("${jwt.expiration}")
     private Long expiration;
 
     private Key signingKey;
 
-    @SuppressWarnings("unused")
     @PostConstruct
     public void init() {
         signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

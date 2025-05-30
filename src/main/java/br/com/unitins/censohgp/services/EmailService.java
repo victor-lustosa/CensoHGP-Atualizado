@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class EmailService {
 
     private final JavaMailSender mailSender;
@@ -33,7 +34,7 @@ public class EmailService {
         }
     }
 
-    @SuppressWarnings("unused")
+
     public void sendMail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);

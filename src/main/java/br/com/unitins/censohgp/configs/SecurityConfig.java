@@ -53,7 +53,6 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_MATCHERS_PUT = {};
 
-    @SuppressWarnings("unused")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
 
@@ -70,7 +69,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @SuppressWarnings("unused")
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
@@ -79,7 +77,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @SuppressWarnings("unused")
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }

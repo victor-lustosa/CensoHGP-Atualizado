@@ -40,7 +40,6 @@ public class ChecklistResource {
     }
 
     @GetMapping("/checklists/paciente/{idPaciente}")
-    @SuppressWarnings("unused")
     public ResponseEntity<List<ChecklistModel>> findByPatient(@PathVariable(value = "idPaciente") Long id) {
         return ResponseEntity.ok(checklistRepository.findByPatientId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi encontrado checklist para o paciente.")));
