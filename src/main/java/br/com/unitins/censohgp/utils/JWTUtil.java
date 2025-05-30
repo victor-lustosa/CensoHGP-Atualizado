@@ -17,9 +17,11 @@ import java.security.Key;
 @Component
 public class JWTUtil {
 
+    @SuppressWarnings("unused")
     @Value("${jwt.secret}")
     private String secret;
 
+    @SuppressWarnings("unused")
     @Value("${jwt.expiration}")
     private Long expiration;
 
