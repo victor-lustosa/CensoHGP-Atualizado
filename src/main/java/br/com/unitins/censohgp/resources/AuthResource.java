@@ -20,6 +20,7 @@ import java.util.ArrayList;
 @RequestMapping("/apicensohgp")
 @Tag(name = "Autenticação", description = "Endpoints para autenticação de usuários")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class AuthResource {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;

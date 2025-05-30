@@ -27,6 +27,7 @@ import java.util.Arrays;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
