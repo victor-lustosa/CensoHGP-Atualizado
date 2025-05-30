@@ -5,6 +5,7 @@ import br.com.unitins.censohgp.models.dtos.ChecklistDTO;
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.repositories.impl.*;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Checklist", description = "Endpoints para checklists de pacientes")
 @RequiredArgsConstructor
 public class ChecklistResource {
 

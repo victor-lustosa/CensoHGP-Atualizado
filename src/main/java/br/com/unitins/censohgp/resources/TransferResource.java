@@ -2,6 +2,7 @@ package br.com.unitins.censohgp.resources;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Transferências", description = "Endpoints para transferências de pacientes")
 @RequiredArgsConstructor
 @Slf4j
 public class TransferResource {

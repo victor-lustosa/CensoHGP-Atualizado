@@ -3,6 +3,7 @@ package br.com.unitins.censohgp.resources;
 import br.com.unitins.censohgp.models.dtos.AuthDTO;
 import br.com.unitins.censohgp.models.dtos.TokenDTO;
 import br.com.unitins.censohgp.utils.JWTUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Autenticação", description = "Endpoints para autenticação de usuários")
 @RequiredArgsConstructor
 public class AuthResource {
     private final AuthenticationManager authenticationManager;

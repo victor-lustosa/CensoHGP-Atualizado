@@ -3,6 +3,7 @@ package br.com.unitins.censohgp.resources;
 import br.com.unitins.censohgp.models.DepartmentModel;
 import br.com.unitins.censohgp.models.dtos.DepartmentDTO;
 import br.com.unitins.censohgp.repositories.impl.DepartmentRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Departamentos", description = "Endpoints para departamentos")
 @RequiredArgsConstructor
 public class DepartmentResource {
 

@@ -3,6 +3,7 @@ package br.com.unitins.censohgp.resources;
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.PrecautionModel;
 import br.com.unitins.censohgp.repositories.impl.PrecautionRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Precauções", description = "Endpoints para precauções")
 @RequiredArgsConstructor
 public class PrecautionResource {
 

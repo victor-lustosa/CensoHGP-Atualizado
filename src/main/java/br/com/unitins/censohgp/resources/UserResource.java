@@ -1,5 +1,6 @@
 package br.com.unitins.censohgp.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import br.com.unitins.censohgp.models.UserModel;
 
 @RestController
 @RequestMapping(value = "/apicensohgp")
+@Tag(name = "Usuários", description = "Endpoints para usuários do sistema")
 @RequiredArgsConstructor
 public class UserResource {
 

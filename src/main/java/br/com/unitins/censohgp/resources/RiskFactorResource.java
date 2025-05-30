@@ -3,6 +3,7 @@ package br.com.unitins.censohgp.resources;
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.RiskFactorModel;
 import br.com.unitins.censohgp.repositories.impl.RiskFactorRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Fatores de Risco", description = "Endpoints para fatores de risco")
 @RequiredArgsConstructor
 public class RiskFactorResource {
 

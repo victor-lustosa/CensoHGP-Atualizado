@@ -11,6 +11,7 @@ import br.com.unitins.censohgp.repositories.impl.DepartmentRepository;
 import br.com.unitins.censohgp.repositories.impl.PatientRepository;
 import br.com.unitins.censohgp.repositories.impl.PrecautionRepository;
 import br.com.unitins.censohgp.repositories.impl.UserRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/apicensohgp")
+@Tag(name = "Pacientes", description = "Endpoints para pacientes")
 @RequiredArgsConstructor
 public class PatientResource {
 

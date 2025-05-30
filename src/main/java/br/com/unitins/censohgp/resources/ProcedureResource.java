@@ -3,6 +3,7 @@ package br.com.unitins.censohgp.resources;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import br.com.unitins.censohgp.repositories.impl.ProcedureRepository;
 
 @RestController
 @RequestMapping(value = "/apicensohgp")
+@Tag(name = "Procedimentos", description = "Endpoints para procedimentos")
 @RequiredArgsConstructor
 public class ProcedureResource {
 
