@@ -1,4 +1,4 @@
-package br.com.unitins.censohgp.repositories.impl;
+package br.com.unitins.censohgp.repositories;
 
 import java.util.List;
 

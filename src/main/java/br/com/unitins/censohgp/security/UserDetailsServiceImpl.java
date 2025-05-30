@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.unitins.censohgp.models.UserModel;
-import br.com.unitins.censohgp.repositories.impl.UserRepository;
+import br.com.unitins.censohgp.repositories.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
 
  @SuppressWarnings("unused")

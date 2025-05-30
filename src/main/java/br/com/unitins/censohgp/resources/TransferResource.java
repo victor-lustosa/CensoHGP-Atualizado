@@ -14,10 +14,10 @@ import br.com.unitins.censohgp.models.UserModel;
 import br.com.unitins.censohgp.models.PatientModel;
 import br.com.unitins.censohgp.models.DepartmentModel;
 import br.com.unitins.censohgp.models.dtos.TransferDTO;
-import br.com.unitins.censohgp.repositories.impl.TransferRepository;
-import br.com.unitins.censohgp.repositories.impl.DepartmentRepository;
-import br.com.unitins.censohgp.repositories.impl.PatientRepository;
-import br.com.unitins.censohgp.repositories.impl.UserRepository;
+import br.com.unitins.censohgp.repositories.TransferRepository;
+import br.com.unitins.censohgp.repositories.DepartmentRepository;
+import br.com.unitins.censohgp.repositories.PatientRepository;
+import br.com.unitins.censohgp.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

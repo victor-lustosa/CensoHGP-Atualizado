@@ -1,4 +1,4 @@
-package br.com.unitins.censohgp.repositories.impl;
+package br.com.unitins.censohgp.repositories;
 
 import br.com.unitins.censohgp.models.DepartmentModel;
 import org.springframework.data.jpa.repository.JpaRepository;

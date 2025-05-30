@@ -3,7 +3,7 @@ package br.com.unitins.censohgp.resources;
 import br.com.unitins.censohgp.models.*;
 import br.com.unitins.censohgp.models.dtos.ChecklistDTO;
 import br.com.unitins.censohgp.exceptions.BusinessException;
-import br.com.unitins.censohgp.repositories.impl.*;
+import br.com.unitins.censohgp.repositories.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

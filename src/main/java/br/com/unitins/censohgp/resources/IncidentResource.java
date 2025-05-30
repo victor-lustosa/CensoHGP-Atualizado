@@ -2,7 +2,7 @@ package br.com.unitins.censohgp.resources;
 
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.IncidentModel;
-import br.com.unitins.censohgp.repositories.impl.IncidentRepository;
+import br.com.unitins.censohgp.repositories.IncidentRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

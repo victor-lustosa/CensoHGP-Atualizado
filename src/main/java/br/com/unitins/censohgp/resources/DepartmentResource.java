@@ -2,7 +2,7 @@ package br.com.unitins.censohgp.resources;
 
 import br.com.unitins.censohgp.models.DepartmentModel;
 import br.com.unitins.censohgp.models.dtos.DepartmentDTO;
-import br.com.unitins.censohgp.repositories.impl.DepartmentRepository;
+import br.com.unitins.censohgp.repositories.DepartmentRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

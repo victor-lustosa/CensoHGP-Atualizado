@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
-import br.com.unitins.censohgp.repositories.impl.UserRepository;
+import br.com.unitins.censohgp.repositories.UserRepository;
 import br.com.unitins.censohgp.models.dtos.UserDTO;
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.UserModel;

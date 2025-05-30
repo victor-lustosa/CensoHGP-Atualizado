@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.unitins.censohgp.exceptions.BusinessException;
 import br.com.unitins.censohgp.models.ProcedureModel;
-import br.com.unitins.censohgp.repositories.impl.ProcedureRepository;
+import br.com.unitins.censohgp.repositories.ProcedureRepository;
 
 @RestController
 @RequestMapping(value = "/apicensohgp")

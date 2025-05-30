@@ -5,7 +5,7 @@ import br.com.unitins.censohgp.models.dtos.AuthDTO;
 import br.com.unitins.censohgp.models.dtos.TokenDTO;
 import br.com.unitins.censohgp.models.dtos.UserNewPasswordDTO;
 import br.com.unitins.censohgp.models.enums.Profile;
-import br.com.unitins.censohgp.repositories.impl.UserRepository;
+import br.com.unitins.censohgp.repositories.UserRepository;
 import br.com.unitins.censohgp.services.EmailService;
 import br.com.unitins.censohgp.utils.JWTUtil;
 import br.com.unitins.censohgp.utils.UserUtil;
@@ -76,7 +76,5 @@ public class AuthResource {
     public ResponseEntity<List<String>> getProfiles() {
         return ResponseEntity.ok(Profile.getAllProfileNames());
     }
-
-
 }
 
