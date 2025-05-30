@@ -38,7 +38,6 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/apicensohgp/login",
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
@@ -49,7 +48,10 @@ public class SecurityConfig {
             "/apicensohgp/procedimentos/**"
     };
 
-    private static final String[] PUBLIC_MATCHERS_POST = {"/auth/forgot/**"};
+    private static final String[] PUBLIC_MATCHERS_POST = {
+            "/auth/forgot/**",
+            "/apicensohgp/auth/login",
+    };
 
     private static final String[] PUBLIC_MATCHERS_PUT = {};
 
@@ -63,7 +65,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
                         .requestMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated())
                 .addFilter(new JWTAuthenticationFilter(authManager, jwtUtil))
-                .addFilterBefore(new JWTAuthorizationFilter(authManager, jwtUtil, userDetailsService),UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTAuthorizationFilter(authManager, jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }

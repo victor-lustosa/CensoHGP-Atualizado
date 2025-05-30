@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,46 +26,46 @@ public class PrecautionResource {
     private final PrecautionRepository precautionRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/precaucoes")
+    @GetMapping("/precautions")
     public List<PrecautionModel> getAll() {
         return precautionRepository.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/precaucoes/ativos")
+    @GetMapping("/precautions/actives")
     public List<PrecautionModel> getAllActive() {
         return precautionRepository.findAllActive();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/precaucoes/inativos")
+    @GetMapping("/precautions/inactives")
     public List<PrecautionModel> getAllInactive() {
         return precautionRepository.findAllInactive();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/precaucao/{idPrecaucao}")
-    public ResponseEntity<PrecautionModel> getById(@PathVariable(value = "idPrecaucao") Long id) {
+    @GetMapping("/precautions/{id}")
+    public ResponseEntity<PrecautionModel> getById(@PathVariable(value = "id") Long id) {
         return precautionRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Precaution not found."));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Precaução não encontrada."));
     }
 
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/precaucao")
+    @PostMapping("/precautions")
     public ResponseEntity<PrecautionModel> create(@Valid @RequestBody PrecautionModel precaution) {
         if (precautionRepository.findByName(precaution.getName()).isPresent()) {
-            throw new BusinessException("This precaution already exists in the system!");
+            throw new BusinessException("Precaução já existe no sistema.");
         }
         precaution.setActive(true);
         PrecautionModel saved = precautionRepository.save(precaution);
         return ResponseEntity.status(CREATED).body(saved);
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/precaucao")
+    @PutMapping("/precautions")
     public ResponseEntity<PrecautionModel> update(@Valid @RequestBody PrecautionModel precaution) {
         return precautionRepository.findById(precaution.getId())
                 .map(existing -> {
@@ -72,12 +73,12 @@ public class PrecautionResource {
                     PrecautionModel updated = precautionRepository.save(precaution);
                     return ResponseEntity.status(CREATED).body(updated);
                 })
-                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Precaution not found."));
+                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Precaução não encontrada."));
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/precaucao/mudar-status")
+    @PutMapping("/precautions/toggle-status")
     public ResponseEntity<PrecautionModel> toggleStatus(@Valid @RequestBody PrecautionModel precaution) {
         return precautionRepository.findById(precaution.getId())
                 .map(existing -> {
@@ -85,6 +86,6 @@ public class PrecautionResource {
                     PrecautionModel updated = precautionRepository.save(existing);
                     return ResponseEntity.status(CREATED).body(updated);
                 })
-                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Precaution not found."));
+                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Precaução não encontrada."));
     }
 }

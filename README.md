@@ -13,6 +13,7 @@ Atualização de um sistema Java 8 para java 21, desenvolvido com **Spring Boot*
 - Lombok
 - Jakarta Validation
 - API RESTful
+- Swagger/OpenAPI
 
 ## 📁 Estrutura do Projeto
 

@@ -39,45 +39,45 @@ public class PatientResource {
     private final UserRepository userRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/pacientes")
+    @GetMapping("/patients")
     public List<PatientModel> findAll() {
         return patientRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/paciente/{idPaciente}")
-    public PatientModel findById(@PathVariable("idPaciente") long id) {
+    @GetMapping("/patients/{id}")
+    public PatientModel findById(@PathVariable("id") long id) {
         return patientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/pacientes/departamento/{departamento}")
-    public List<PatientModel> findByDepartment(@PathVariable("departamento") String name) {
+    @GetMapping("/patients/department/{name}")
+    public List<PatientModel> findByDepartment(@PathVariable("name") String name) {
         DepartmentModel department = departmentRepository.findByNameUpperCase(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid department"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não é válido."));
         return patientRepository.findByDepartment(department.getId());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/paciente")
+    @PostMapping("/patients/{userRegistration}")
     public ResponseEntity<Void> create(@RequestBody @Valid NewPatientDTO dto,
-                                       @RequestParam(value = "matriculaUsuario", defaultValue = "") String userRegistration) {
+                                       @RequestParam(value = "userRegistration") String userRegistration) {
 
         if (patientRepository.findByMedicalRecord(dto.medicalRecord()) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This patient already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente com o prontuário " + dto.medicalRecord() + " não foi encontrado.");
         }
 
         DepartmentModel department = departmentRepository.findById(dto.departmentId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não foi encontrado."));
 
         UserModel user = userRepository.findByRegistration(userRegistration)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não foi encontrado."));
 
         List<PrecautionModel> precautions = new ArrayList<>();
         if (dto.precautions() != null) {
             for (Long id : dto.precautions()) {
                 precautions.add(precautionRepository.findById(id)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required")));
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Precaução com o registro " + id + " não foi encontrado.")));
             }
         }
 
@@ -104,24 +104,24 @@ public class PatientResource {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/paciente")
+    @PutMapping("/patients/{userRegistration}")
     public ResponseEntity<Void> updatePatient(@Valid @RequestBody PatientDTO dto,
-                                              @RequestParam(value = "matriculaUsuario", defaultValue = "") String userRegistration) {
+                                              @RequestParam(value = "userRegistration") String userRegistration) {
 
         PatientModel patient = patientRepository.findById(dto.patientId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não foi encontrado."));
 
         DepartmentModel department = departmentRepository.findById(dto.departmentId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não foi encontrado."));
 
         UserModel user = userRepository.findByRegistration(userRegistration)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não foi encontrado."));
 
         List<PrecautionModel> precautions = new ArrayList<>();
         if (dto.precautions() != null) {
             for (Long id : dto.precautions()) {
                 var precaution = precautionRepository.findById(id)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department is required"));
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Precaução com o registro " + id + " não foi encontrado."));
                 precautions.add(precaution);
             }
         }

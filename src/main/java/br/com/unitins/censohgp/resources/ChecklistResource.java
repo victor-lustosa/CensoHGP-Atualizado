@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/apicensohgp")
-@Tag(name = "Checklist", description = "Endpoints para checklists de pacientes")
+@Tag(name = "Checklists", description = "Endpoints para checklists de pacientes")
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
 public class ChecklistResource {
@@ -33,20 +33,20 @@ public class ChecklistResource {
         return ResponseEntity.ok(checklistRepository.findAll());
     }
 
-    @GetMapping("/checklist/{idChecklist}")
-    public ResponseEntity<ChecklistModel> findById(@PathVariable(value = "idChecklist") Long id) {
+    @GetMapping("/checklists/{id}")
+    public ResponseEntity<ChecklistModel> findById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(checklistRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Checklist não foi encontrado.")));
     }
 
-    @GetMapping("/checklists/paciente/{idPaciente}")
-    public ResponseEntity<List<ChecklistModel>> findByPatient(@PathVariable(value = "idPaciente") Long id) {
+    @GetMapping("/checklists/patient/{id}")
+    public ResponseEntity<List<ChecklistModel>> findByPatient(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(checklistRepository.findByPatientId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi encontrado checklist para o paciente.")));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/checklist")
+    @PostMapping("/checklists")
     public ChecklistModel save(@RequestBody ChecklistDTO dto) {
         if (dto.userRegistration() == null) {
             throw new BusinessException("Checklist precisa estar associado a um usuário.");

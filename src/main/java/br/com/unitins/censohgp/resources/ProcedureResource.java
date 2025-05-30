@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,34 +27,34 @@ public class ProcedureResource {
     private final ProcedureRepository procedureRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/procedimentos")
+    @GetMapping("/procedures")
     public ResponseEntity<List<ProcedureModel>> findAll() {
         return ResponseEntity.ok(procedureRepository.findAllByName());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/procedimentos/ativos")
+    @GetMapping("/procedures/actives")
     public ResponseEntity<List<ProcedureModel>> findAllActive() {
         return ResponseEntity.ok(procedureRepository.findAllActive());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/procedimentos/inativos")
+    @GetMapping("/procedures/inactives")
     public ResponseEntity<List<ProcedureModel>> findAllInactive() {
         return ResponseEntity.ok(procedureRepository.findAllInactive());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/procedimento/{idProcedimento}")
-    public ResponseEntity<ProcedureModel> findById(@PathVariable(value = "idProcedimento") long id) {
+    @GetMapping("/procedures/{id}")
+    public ResponseEntity<ProcedureModel> findById(@PathVariable(value = "id") long id) {
         ProcedureModel procedure = procedureRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Procedure not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Procedimento não encontrado."));
         return ResponseEntity.ok(procedure);
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/procedimento")
+    @PostMapping("/procedures")
     public ResponseEntity<ProcedureModel> createProcedure(@Valid @RequestBody ProcedureModel procedure) {
         Optional<ProcedureModel> existingProcedure = procedureRepository.findByName(procedure.getName());
         if (existingProcedure.isPresent()) {
@@ -64,9 +65,9 @@ public class ProcedureResource {
         return new ResponseEntity<>(createdProcedure, HttpStatus.CREATED);
     }
 
-  //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/procedimento")
+    @PutMapping("/procedures")
     public ResponseEntity<ProcedureModel> updateProcedure(@Valid @RequestBody ProcedureModel procedure) {
         if (procedureRepository.existsById(procedure.getId())) {
             try {
@@ -80,9 +81,9 @@ public class ProcedureResource {
         }
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/procedimento/mudar-status")
+    @PutMapping("/procedures/toggle-status")
     public ResponseEntity<ProcedureModel> updateProcedureStatus(@Valid @RequestBody ProcedureModel procedure) {
         Optional<ProcedureModel> existingProcedure = procedureRepository.findById(procedure.getId());
 

@@ -36,24 +36,24 @@ public class TransferResource {
     private final PatientRepository patientRepository;
     private final DepartmentRepository departmentRepository;
 
-    @GetMapping("/transferencias")
+    @GetMapping("/transfers")
     public ResponseEntity<List<TransferModel>> findAll() {
         return ResponseEntity.ok(transferRepository.findAll());
     }
 
-    @GetMapping("/transferencia/{idTransferencia}")
-    public ResponseEntity<TransferModel> findById(@PathVariable(value = "idTransferencia") long id) {
+    @GetMapping("/transfers/{id}")
+    public ResponseEntity<TransferModel> findById(@PathVariable(value = "id") long id) {
         return transferRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transferência não encontrada"));
     }
 
-    @GetMapping("/transferencias/paciente/{idPaciente}")
-    public ResponseEntity<List<TransferModel>> findByPatient(@PathVariable(value = "idPaciente") long patientId) {
+    @GetMapping("/transfers/patient/{id}")
+    public ResponseEntity<List<TransferModel>> findByPatient(@PathVariable(value = "id") long patientId) {
         return ResponseEntity.ok(transferRepository.findByPatientId(patientId));
     }
 
-    @PostMapping("/transferencia")
+    @PostMapping("/transfers")
     public ResponseEntity<TransferModel> createTransfer(@Valid @RequestBody TransferDTO transferDTO) {
         log.info("Creating transfer: {}", transferDTO);
 
@@ -82,7 +82,7 @@ public class TransferResource {
             TransferModel savedTransfer = transferRepository.save(transfer);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedTransfer);
         } catch (Exception e) {
-            log.error("Error saving transfer", e);
+            log.error("Error, saving transfer", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno, contacte o administrador do sistema!");
         }
     }

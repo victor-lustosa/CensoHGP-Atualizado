@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,29 +25,29 @@ public class DepartmentResource {
     private final DepartmentRepository departmentRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/departamentos")
+    @GetMapping("/departments")
     public ResponseEntity<List<DepartmentModel>> findAll() {
         return ResponseEntity.ok(departmentRepository.findAllByName());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/departamento/{idDepartamento}")
-    public ResponseEntity<DepartmentModel> findById(@PathVariable("departmentId") long id) {
+    @GetMapping("/departments/{id}")
+    public ResponseEntity<DepartmentModel> findById(@PathVariable("id") long id) {
         return ResponseEntity.ok(departmentRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado.")));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/departamentos/ativos")
+    @GetMapping("/departments/actives")
     public ResponseEntity<List<DepartmentModel>> findAllActive() {
         return ResponseEntity.ok(departmentRepository.findAllActives());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/departamento")
+    @GetMapping("/departments/{type}/{status}")
     public List<DepartmentModel> getByFilters(
-            @RequestParam(value = "tipo", required = false, defaultValue = "") String type,
-            @RequestParam(value = "status", required = false, defaultValue = "") String status) {
+            @RequestParam(value = "type") String type,
+            @RequestParam(value = "status") String status) {
 
         if (!type.isEmpty() && status.isEmpty()) {
             boolean typeBoolean = Boolean.parseBoolean(type);
@@ -63,15 +64,15 @@ public class DepartmentResource {
         return Collections.emptyList();
     }
 
-  //  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/departamento")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/departments")
     public ResponseEntity<Void> create(@RequestBody @Valid DepartmentDTO dto) {
         if (dto.bedsCount() < 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Number of beds must be greater than zero!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Numero de leitos deve ser maior que zero.");
         }
 
         if (departmentRepository.findByNameUpperCase(dto.name()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This department already exists in the system!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse departamento já existe no sistema.");
         }
 
         DepartmentModel department = new DepartmentModel();
@@ -85,21 +86,21 @@ public class DepartmentResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping("/departamento")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PutMapping("/departments")
     public ResponseEntity<Void> update(@RequestBody @Valid DepartmentDTO dto) {
 
         departmentRepository.findByNameUpperCase(dto.name())
                 .filter(dep -> dep.getId() != dto.departmentId())
                 .ifPresent(dep -> {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This department already exists in the system!");
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse departamento já existe no sistema.");
                 });
 
         DepartmentModel department = departmentRepository.findById(dto.departmentId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department not found!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não encontrado."));
 
         if (dto.bedsCount() < 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Number of beds must be greater than zero!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Numero de leitos deve ser maior que zero.");
         }
 
         department.setName(dto.name());
@@ -112,11 +113,11 @@ public class DepartmentResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping("/departamento/mudar-status")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PutMapping("/departments/toggle-status")
     public ResponseEntity<Void> toggleStatus(@RequestBody @Valid DepartmentDTO dto) {
         DepartmentModel department = departmentRepository.findById(dto.departmentId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department not found!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não encontrado."));
 
         department.setActive(!department.isActive());
         departmentRepository.save(department);
