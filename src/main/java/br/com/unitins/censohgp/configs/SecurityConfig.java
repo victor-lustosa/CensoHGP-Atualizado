@@ -27,14 +27,17 @@ import java.util.Arrays;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@SuppressWarnings("unused")
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
 
     private final JWTUtil jwtUtil;
 
-    private static final String[] PUBLIC_MATCHERS = {};
+    private static final String[] PUBLIC_MATCHERS = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/apicensohgp/paciente/**",
