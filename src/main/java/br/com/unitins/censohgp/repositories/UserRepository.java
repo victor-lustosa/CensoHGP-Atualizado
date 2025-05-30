@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.unitins.censohgp.models.UserModel;
 
+@SuppressWarnings("unused")
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     @Query(" select u from UserModel u order by u.name asc")

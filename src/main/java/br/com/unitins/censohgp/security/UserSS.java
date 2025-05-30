@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import br.com.unitins.censohgp.models.enums.Profile;
 
+@SuppressWarnings("unused")
 public class UserSS implements UserDetails {
 
     @Serial

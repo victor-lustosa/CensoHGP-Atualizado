@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import br.com.unitins.censohgp.models.PrecautionModel;
 
+@SuppressWarnings("unused")
 public interface PrecautionRepository extends JpaRepository<PrecautionModel, Long> {
 
     Optional<PrecautionModel> findByName(String name);
