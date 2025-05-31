@@ -8,11 +8,11 @@
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.unitins</groupId>
-	<artifactId>censohgp</artifactId>
+	<groupId>br.com.app</groupId>
+	<artifactId>salusdata</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>censohgp</name>
-	<description>Projeto de API para Hospital Geral de Palmas.</description>
+	<name>salusdata</name>
+	<description>Projeto de API para controle e visualizacao do estado atual dos leitos hospitalares, pacientes e departamentos de clinicas e hospitais.</description>
 	<url/>
 	<licenses>
 		<license/>

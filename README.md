@@ -1,6 +1,6 @@
-# 🏥 Censo HGP - Sistema de Gestão de Pacientes
+# 🏥 SalusData - Sistema Hospitalar
 
-Atualização de um sistema Java 8 para java 21, desenvolvido com **Spring Boot** para gerenciar informações do censo hospitalar, incluindo pacientes, departamentos, procedimentos e controle de acesso de usuários.
+Sistema para controle e visualização do estado atual dos leitos hospitalares, pacientes e departamentos de clinicas e hospitais.
 
 ## 📦 Tecnologias Utilizadas
 
@@ -19,7 +19,7 @@ Atualização de um sistema Java 8 para java 21, desenvolvido com **Spring Boot*
 
 ```text
 
-br.com.unitins.censohgp
+br.com.app.salusdata
 │
 ├── configs # Configurações de segurança e filtros JWT
 ├── controllers # Endpoints REST
